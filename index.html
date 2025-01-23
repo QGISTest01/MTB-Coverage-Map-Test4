@@ -39,12 +39,12 @@
         <script src="js/labels.js"></script>
         <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
-        <script src="data/FCCManagedBuildings_1.js"></script>
-        <script src="data/SEACOMMTBsites_2.js"></script>
+        <script src="data/SEACOMMTBsites_1.js"></script>
+        <script src="data/FCCManagedBuildings_2.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-33.944168191315136,18.46849962200535],[-33.94227944501515,18.472620523023497]]);
+        }).fitBounds([[-33.9375941459023,18.459000245622878],[-33.93381665330234,18.46683504508947]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -106,7 +106,58 @@
         });
         layer_GoogleMapsSatelliteImagery_0;
         map.addLayer(layer_GoogleMapsSatelliteImagery_0);
-        function pop_FCCManagedBuildings_1(feature, layer) {
+        function pop_SEACOMMTBsites_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Wiki Link'] !== null ? autolinker.link(feature.properties['Wiki Link'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td class="visible-with-data" id="Pricing"colspan="2"><strong>Pricing</strong><br />' + (feature.properties['Pricing'] !== null ? '<img src="images/' + String(feature.properties['Pricing']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td class="visible-with-data" id="Timelines"colspan="2"><strong>Timelines</strong><br />' + (feature.properties['Timelines'] !== null ? '<img src="images/' + String(feature.properties['Timelines']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxHeight: 400 });
+        }
+
+        function style_SEACOMMTBsites_1_0() {
+            return {
+                pane: 'pane_SEACOMMTBsites_1',
+                opacity: 1,
+                color: 'rgba(40,180,15,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 4.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(53,240,20,0.6235294117647059)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_SEACOMMTBsites_1');
+        map.getPane('pane_SEACOMMTBsites_1').style.zIndex = 401;
+        map.getPane('pane_SEACOMMTBsites_1').style['mix-blend-mode'] = 'normal';
+        var layer_SEACOMMTBsites_1 = new L.geoJson(json_SEACOMMTBsites_1, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_SEACOMMTBsites_1',
+            layerName: 'layer_SEACOMMTBsites_1',
+            pane: 'pane_SEACOMMTBsites_1',
+            onEachFeature: pop_SEACOMMTBsites_1,
+            style: style_SEACOMMTBsites_1_0,
+        });
+        bounds_group.addLayer(layer_SEACOMMTBsites_1);
+        map.addLayer(layer_SEACOMMTBsites_1);
+        function pop_FCCManagedBuildings_2(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
@@ -125,9 +176,9 @@
 			layer.bindPopup(content, { maxHeight: 400 });
         }
 
-        function style_FCCManagedBuildings_1_0() {
+        function style_FCCManagedBuildings_2_0() {
             return {
-                pane: 'pane_FCCManagedBuildings_1',
+                pane: 'pane_FCCManagedBuildings_2',
                 opacity: 1,
                 color: 'rgba(31,120,180,0.28627450980392155)',
                 dashArray: '',
@@ -140,77 +191,20 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_FCCManagedBuildings_1');
-        map.getPane('pane_FCCManagedBuildings_1').style.zIndex = 401;
-        map.getPane('pane_FCCManagedBuildings_1').style['mix-blend-mode'] = 'normal';
-        var layer_FCCManagedBuildings_1 = new L.geoJson(json_FCCManagedBuildings_1, {
+        map.createPane('pane_FCCManagedBuildings_2');
+        map.getPane('pane_FCCManagedBuildings_2').style.zIndex = 402;
+        map.getPane('pane_FCCManagedBuildings_2').style['mix-blend-mode'] = 'normal';
+        var layer_FCCManagedBuildings_2 = new L.geoJson(json_FCCManagedBuildings_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_FCCManagedBuildings_1',
-            layerName: 'layer_FCCManagedBuildings_1',
-            pane: 'pane_FCCManagedBuildings_1',
-            onEachFeature: pop_FCCManagedBuildings_1,
-            style: style_FCCManagedBuildings_1_0,
+            dataVar: 'json_FCCManagedBuildings_2',
+            layerName: 'layer_FCCManagedBuildings_2',
+            pane: 'pane_FCCManagedBuildings_2',
+            onEachFeature: pop_FCCManagedBuildings_2,
+            style: style_FCCManagedBuildings_2_0,
         });
-        bounds_group.addLayer(layer_FCCManagedBuildings_1);
-        map.addLayer(layer_FCCManagedBuildings_1);
-        function pop_SEACOMMTBsites_2(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Status</th>\
-                        <td>' + (feature.properties['Status'] !== null ? autolinker.link(feature.properties['Status'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['Wiki Link'] !== null ? autolinker.link(feature.properties['Wiki Link'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Pricing</th>\
-                        <td class="visible-with-data" id="Pricing">' + (feature.properties['Pricing'] !== null ? '<img src="images/' + String(feature.properties['Pricing']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Timelines</th>\
-                        <td>' + (feature.properties['Timelines'] !== null ? '<img src="images/' + String(feature.properties['Timelines']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
-                    </tr>\
-                </table>';
-            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
-			layer.on('popupopen', function(e) {
-				addClassToPopupIfMedia(content, e.popup);
-			});
-			layer.bindPopup(content, { maxHeight: 400 });
-        }
-
-        function style_SEACOMMTBsites_2_0() {
-            return {
-                pane: 'pane_SEACOMMTBsites_2',
-                opacity: 1,
-                color: 'rgba(40,180,15,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 4.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(53,240,20,0.6235294117647059)',
-                interactive: true,
-            }
-        }
-        map.createPane('pane_SEACOMMTBsites_2');
-        map.getPane('pane_SEACOMMTBsites_2').style.zIndex = 402;
-        map.getPane('pane_SEACOMMTBsites_2').style['mix-blend-mode'] = 'normal';
-        var layer_SEACOMMTBsites_2 = new L.geoJson(json_SEACOMMTBsites_2, {
-            attribution: '',
-            interactive: true,
-            dataVar: 'json_SEACOMMTBsites_2',
-            layerName: 'layer_SEACOMMTBsites_2',
-            pane: 'pane_SEACOMMTBsites_2',
-            onEachFeature: pop_SEACOMMTBsites_2,
-            style: style_SEACOMMTBsites_2_0,
-        });
-        bounds_group.addLayer(layer_SEACOMMTBsites_2);
-        map.addLayer(layer_SEACOMMTBsites_2);
+        bounds_group.addLayer(layer_FCCManagedBuildings_2);
+        map.addLayer(layer_FCCManagedBuildings_2);
         var osmGeocoder = new L.Control.Geocoder({
             collapsed: true,
             position: 'topleft',
@@ -222,8 +216,8 @@
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
         .title += 'Search for a place';
         var overlaysTree = [
-            {label: '<img src="legend/SEACOMMTBsites_2.png" /> SEACOM MTB sites', layer: layer_SEACOMMTBsites_2},
-            {label: '<img src="legend/FCCManagedBuildings_1.png" /> FCC Managed Buildings', layer: layer_FCCManagedBuildings_1},
+            {label: '<img src="legend/FCCManagedBuildings_2.png" /> FCC Managed Buildings', layer: layer_FCCManagedBuildings_2},
+            {label: '<img src="legend/SEACOMMTBsites_1.png" /> SEACOM MTB sites', layer: layer_SEACOMMTBsites_1},
             {label: "Google Maps Satellite Imagery", layer: layer_GoogleMapsSatelliteImagery_0, radioGroup: 'bm' },]
         var lay = L.control.layers.tree(null, overlaysTree,{
             //namedToggle: true,
@@ -237,27 +231,27 @@
         lay.addTo(map);
         setBounds();
         var i = 0;
-        layer_SEACOMMTBsites_2.eachLayer(function(layer) {
+        layer_SEACOMMTBsites_1.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #323232; font-size: 9pt; font-weight: bold; font-family: \'Open Sans ExtraBold\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SEACOMMTBsites_2'});
+            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #323232; font-size: 9pt; font-weight: bold; font-family: \'Open Sans ExtraBold\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SEACOMMTBsites_1'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        resetLabels([layer_SEACOMMTBsites_2]);
+        resetLabels([layer_SEACOMMTBsites_1]);
         map.on("zoomend", function(){
-            resetLabels([layer_SEACOMMTBsites_2]);
+            resetLabels([layer_SEACOMMTBsites_1]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_SEACOMMTBsites_2]);
+            resetLabels([layer_SEACOMMTBsites_1]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_SEACOMMTBsites_2]);
+            resetLabels([layer_SEACOMMTBsites_1]);
         });
         </script>
     </body>
