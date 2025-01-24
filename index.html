@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         #map {
-            width: 1682px;
-            height: 812px;
+            width: 1298px;
+            height: 635px;
         }
         </style>
         <title></title>
@@ -42,7 +42,7 @@
         <script>
         var map = L.map('map', {
             zoomControl:false, maxZoom:28, minZoom:1
-        }).fitBounds([[-33.94111980566227,18.458608505649547],[-33.93356482046234,18.47427810458274]]);
+        }).fitBounds([[-33.981076803725294,18.462000547868403],[-33.97918805742531,18.465867554511025]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -107,10 +107,13 @@
         function pop_SEACOMMTBsites_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
+                        <td class="visible-with-data" id="Name"colspan="2"><strong>Name</strong><br />' + (feature.properties['Name'] !== null ? autolinker.link(feature.properties['Name'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">' + (feature.properties['Wiki Link'] !== null ? autolinker.link(feature.properties['Wiki Link'].toLocaleString()) : '') + '</td>\
+                        <td class="visible-with-data" id="Status"colspan="2"><strong>Status</strong><br />' + (feature.properties['Status'] !== null ? autolinker.link(feature.properties['Status'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Note'] !== null ? autolinker.link(feature.properties['Note'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td class="visible-with-data" id="Pricing"colspan="2"><strong>Pricing</strong><br />' + (feature.properties['Pricing'] !== null ? '<img src="images/' + String(feature.properties['Pricing']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
@@ -228,19 +231,6 @@
         });
         lay.addTo(map);
         setBounds();
-        var i = 0;
-        layer_SEACOMMTBsites_1.eachLayer(function(layer) {
-            var context = {
-                feature: layer.feature,
-                variables: {}
-            };
-            layer.bindTooltip((layer.feature.properties['Name'] !== null?String('<div style="color: #323232; font-size: 9pt; font-weight: bold; font-family: \'Open Sans ExtraBold\', sans-serif;">' + layer.feature.properties['Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_SEACOMMTBsites_1'});
-            labels.push(layer);
-            totalMarkers += 1;
-              layer.added = true;
-              addLabel(layer, i);
-              i++;
-        });
         resetLabels([layer_SEACOMMTBsites_1]);
         map.on("zoomend", function(){
             resetLabels([layer_SEACOMMTBsites_1]);
